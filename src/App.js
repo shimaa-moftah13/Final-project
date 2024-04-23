@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
 import Navbar from './components/Navbar/Navbar'
 import MainSlider from './components/MainSlider/MainSlider'
 import Categories from './components/Categories/Categories'
@@ -21,8 +21,10 @@ import BrandDetails from './components/BrandDetails/BrandDetails'
 import CategoriesSlider from './components/CategoriesSlider/CategoriesSlider'
 import { ToastContainer, toast } from 'react-toastify';
 import Address from './components/Address/Address'
-
+import TokenContextProvider, { TokenContext } from './context/Token'
 export default function App() {
+
+  let {setToken} = useContext(TokenContext)
 
   let router = createBrowserRouter([
     {path: '', element: <MainLayout/>, children:[
@@ -48,6 +50,12 @@ export default function App() {
       
     ] }
   ])
+
+  useEffect(()=>{
+    if (localStorage.getItem("userToken") != null) {
+      setToken(localStorage.getItem("userToken"));
+    }
+  })
   return (
     <>
       

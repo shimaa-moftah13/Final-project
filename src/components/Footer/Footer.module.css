@@ -1,0 +1,19 @@
+.widthfootr {
+    width: 6rem;
+    height: 3rem;
+}
+
+.tatl:hover {
+    color: #099c09;
+}
+
+.pp {
+    font-size: 15px;
+}
+
+@media only screen and (max-width: 500px) {
+    .pp {
+        font-size: 8px;
+    }
+
+}

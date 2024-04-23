@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick-theme.css";
 import 'react-toastify/dist/ReactToastify.css';
 import {QueryClient, QueryClientProvider} from "react-query"
 import {ReactQueryDevtools} from "react-query/devtools"
+import TokenContextProvider from './context/Token';
 import './index.scss';
 import App from './App';
 
@@ -16,7 +17,10 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 let query = new QueryClient()
 root.render(
 <QueryClientProvider client={query}>
+    <TokenContextProvider>
     <App />
+    </TokenContextProvider>
+    
     {/* <ReactQueryDevtools position='top-right'/> */}
 </QueryClientProvider> 
 );

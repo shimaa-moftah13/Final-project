@@ -1,20 +1,42 @@
 import React, { useContext, useEffect } from 'react'
 import logo from "../../assets/imgs/freshcart-logo.svg"
-import { Link, NavLink } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { storeContext } from '../../context/storeContext'
+import { TokenContext } from '../../context/Token'
 export default function Navbar() {
 
- let {counter, getCart, setCounter} = useContext(storeContext)
+ let {cartCounter, getCart, setCartCounter, getWishlist, wishlistCounter, setWishlistCounter} = useContext(storeContext)
+ let {token, setToken} = useContext(TokenContext)
+ console.log(token,"tokennnnnnn");
+ let navigate = useNavigate()
+
+
+ function logOut() {
+  localStorage.removeItem('userToken')
+  setToken(null)
+  navigate("/Signin")
+ }
+
 
    useEffect(() => {
        (async() => {
        let data = await getCart()
        console.log(data);
        if(data.status== 'success'){
-        setCounter(data.numOfCartItems)
+        setCartCounter(data.numOfCartItems)
        }
        })()
    }, [])
+
+   useEffect(() => {
+    (async() => {
+    let data = await getWishlist()
+    console.log(data);
+    if(data.status == 'success'){
+      setWishlistCounter(data.count)
+    }
+    })()
+}, [])
 
 
  
@@ -55,31 +77,27 @@ export default function Navbar() {
          <NavLink className="nav-link position-relative" to="/cart">
             Cart
             <i className="fa-solid fa-cart-shopping cartIcon mx-2"></i>
-         {counter ? <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-             {counter}
+         {cartCounter ? <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+             {cartCounter}
             <span className="visually-hidden">unread messages</span>
             </span> : ''}
          </NavLink>
-
-        
        </li>
-
-
-       {/* <li className="nav-item">
+       <li className="nav-item">
          <NavLink className="nav-link position-relative" to="/wishlist">
             WishList
             <i className="fa-solid fa-heart cartIcon mx-2"></i>
-         <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
-             1
+         {wishlistCounter ? <span className="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+             {wishlistCounter}
             <span className="visually-hidden">unread messages</span>
-            </span>
+            </span> : ''}
          </NavLink>
-       </li> */}
+       </li>
 
        <li className="nav-item">
-         <NavLink className="nav-link position-relative" to="/">
+         <button onClick={logOut} className="nav-link position-relative">
             SginOut
-         </NavLink>
+         </button>
        </li>
       
       

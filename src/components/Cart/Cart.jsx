@@ -7,8 +7,8 @@ import { Link } from 'react-router-dom'
 
 export default function Cart() {
 
- let { getCart, removeItem, setCounter, updateQTY} = useContext(storeContext)
-const [loading, setLoading] = useState(true)
+ let { getCart, removeItemFromCart, setCartCounter, updateQTY} = useContext(storeContext)
+ const [loading, setLoading] = useState(true)
  const[cartItems, setCartItems] = useState([])
 
  useEffect(() => {
@@ -20,19 +20,19 @@ const [loading, setLoading] = useState(true)
     setCartItems(data)
   } 
   console.log(data);
-  // if(data.status == 'success'){
-      // setCartItems(data)
+  if(data.status == 'success'){
+      setCartItems(data)
       setLoading(false)
-  //  }
+   }
   })()
 }, [])
 
 
  async function deleteProduct(id){
-  let data = await removeItem(id)
-  console.log(data);
+  let data = await removeItemFromCart(id)
+  // console.log(data);
   setCartItems(data)
-  setCounter(data.numOfCartItems)
+  setCartCounter(data.numOfCartItems)
   toast.error('product deleted successfully')
 
  }
@@ -40,9 +40,9 @@ const [loading, setLoading] = useState(true)
 
  async function updateProductQuantity(id, count){
   let data = await updateQTY(id, count)
-  console.log(data);
+  // console.log(data);
   setCartItems(data)
-  setCounter(data.numOfCartItems)
+  setCartCounter(data.numOfCartItems)
   toast.success('product deleted successfully')
 
  }
@@ -72,7 +72,7 @@ const [loading, setLoading] = useState(true)
                 </div>
 
                 <div>
-                  <button  onClick={()=> updateProductQuantity(item.product._id, item.count+ 1)} className='btn brdr'>+</button>
+                  <button  onClick={()=> updateProductQuantity(item.product._id, item.count + 1)} className='btn brdr'>+</button>
                   <span className='mx-2'>{item.count}</span>
                   <button disabled={item.count <= 1 } onClick={()=> updateProductQuantity(item.product._id, item.count - 1)} className='btn brdr'>-</button>
                 </div>
