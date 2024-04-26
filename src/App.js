@@ -30,6 +30,7 @@ export default function App() {
     {path: '', element: <MainLayout/>, children:[
       {index: true, element: <ProtectedRoutes> <Home/> </ProtectedRoutes>},
       {path: 'home', element: <ProtectedRoutes> <Home/> </ProtectedRoutes>},
+      {path: 'final-project', element: <ProtectedRoutes> <Home/> </ProtectedRoutes>},
       {path: 'home', element: <ProtectedRoutes> <CategoriesSlider/> </ProtectedRoutes>},
       {path: 'categories', element: <ProtectedRoutes> <Categories/> </ProtectedRoutes>},
       {path: 'products', element: <ProtectedRoutes> <Products/> </ProtectedRoutes>},
